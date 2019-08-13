@@ -8,7 +8,19 @@ from carmanagement_api import models
 
 
 class CarViewSet(viewsets.ModelViewSet):
-    """Handle creating viewing and updating cars in the system"""
+    """Handle creating, viewing and updating cars in the system"""
 
     serializer_class = serializers.CarSerializer
     queryset = models.Car.objects.all()
+
+class BranchViewSet(viewsets.ModelViewSet):
+    """Handle creating, viewing and updating branches in the system"""
+
+    serializer_class = serializers.BranchSerializer
+    queryset = models.Branch.objects.all()
+
+class DriverViewSet(viewsets.ModelViewSet):
+    """Handle creating, viewing and updating drivers in the system"""
+
+    serializer_class = serializers.DriverSerializer
+    queryset = models.Driver.objects.all()

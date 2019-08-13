@@ -14,6 +14,7 @@ class CarSerializer(serializers.ModelSerializer):
             }
         }
 
+
 class BranchSerializer(serializers.ModelSerializer):
     """Serializes a branch object"""
 
@@ -25,6 +26,7 @@ class BranchSerializer(serializers.ModelSerializer):
                 'read_only': True
             }
         }
+
 
 class DriverSerializer(serializers.ModelSerializer):
     """Serializes a driver object"""
