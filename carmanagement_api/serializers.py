@@ -13,13 +13,3 @@ class CarSerializer(serializers.ModelSerializer):
                 'read_only': True
             }
         }
-
-    def create(self, validated_data):
-        """Create and return a new user"""
-        car = models.Car.objects.create_user(
-            car_make = validated_data['car_make'],
-            car_model = validated_data['car_model'],
-            year_of_manufacture = validated_data['year_of_manufacture']
-        )
-
-        return car
