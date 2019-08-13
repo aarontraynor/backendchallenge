@@ -7,7 +7,7 @@ class CarSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Car
-        fields = ('id', 'car_make', 'car_model', 'year_of_manufacture', 'at_branch')
+        fields = ('id', 'make', 'model', 'year_of_manufacture')
         extra_kwargs = {
             'id': {
                 'read_only': True

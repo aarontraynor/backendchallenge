@@ -28,17 +28,16 @@ class Driver(models.Model):
 
 class Car(models.Model):
     """Database model for cars in the system"""
-    car_make = models.CharField(max_length=50)
-    car_model = models.CharField(max_length=50)
+    make = models.CharField(max_length=50)
+    model = models.CharField(max_length=50)
     year_of_manufacture = models.PositiveIntegerField(
         # Ensure that the year of manufacture is not later than the current year
         validators=[MaxValueValidator(datetime.now().year),]
     )
-    at_branch = models.BooleanField(default=True)
 
     def __str(self):
         """Return a String representation of the car"""
-        return self.car_make + " " + self.car_model + ", " + year_of_manufacture
+        return self.make + " " + self.model + ", " + year_of_manufacture
 
 class BranchInventory(models.Model):
     """Database model for associations between a car and the branch it is located at"""
