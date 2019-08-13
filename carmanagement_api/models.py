@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.conf import settings
 from datetime import datetime
 
 # Create your models here.
@@ -34,9 +35,25 @@ class Car(models.Model):
         validators=[MaxValueValidator(datetime.now().year),]
     )
     at_branch = models.BooleanField(default=True)
-    branch = models.ForeignKey(Branch, on_delete=models.SET_NULL, null=True)
-    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
 
     def __str(self):
         """Return a String representation of the car"""
         return self.car_make + " " + self.car_model + ", " + year_of_manufacture
+
+class BranchInventory(models.Model):
+    """Database model for associations between a car and the branch it is located at"""
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.PROTECT)
+
+    def __str__(self):
+        """Return a String representation of the car/branch association"""
+        return self.car + " is at " + self.branch
+
+class DriverInventory(models.Model):
+    """Database model for associations between a car and the driver that is in posession of it"""
+    car = models.ForeignKey(Car, on_delete=models.CASCADE)
+    driver = models.ForeignKey(Driver, on_delete=models.PROTECT)
+
+    def __str__(self):
+        """Return a String representation of the car/driver association"""
+        return self.car + " is with " + self.driver
