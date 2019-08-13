@@ -13,3 +13,15 @@ class CarSerializer(serializers.ModelSerializer):
                 'read_only': True
             }
         }
+
+class BranchSerializer(serializers.ModelSerializer):
+    """Serializes a branch object"""
+
+    class Meta:
+        model = models.Branch
+        fields = ('id', 'city', 'postcode')
+        extra_kwargs = {
+            'id': {
+                'read_only': True
+            }
+        }
