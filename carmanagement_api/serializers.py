@@ -51,3 +51,15 @@ class BranchInventorySerializer(serializers.ModelSerializer):
                 'read_only': True
             }
         }
+
+class DriverInventorySerializer(serializers.ModelSerializer):
+    """Serializes an association between a Car and a Driver"""
+
+    class Meta:
+        model = models.DriverInventory
+        fields = ('id', 'car', 'driver')
+        extra_kwargs = {
+            'id': {
+                'read_only': True
+            }
+        }

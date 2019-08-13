@@ -23,7 +23,10 @@ class Driver(models.Model):
 
     def __str__(self):
         """Return a String representation of the driver"""
-        return self.first_name + " " + self.middle_names + " " + self.last_name
+        if(self.middle_names == None):
+            return f'{self.first_name} {self.last_name}'
+        else:
+         return f'{self.first_name} {self.middle_names} {self.last_name}'
 
 
 class Car(models.Model):
