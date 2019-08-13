@@ -17,7 +17,7 @@ class Branch(models.Model):
 class Driver(models.Model):
     """Database model for drivers in the system"""
     first_name = models.CharField(max_length=50)
-    middle_names = models.CharField(max_length=255)
+    middle_names = models.CharField(max_length=255, null=True)
     last_name = models.CharField(max_length=50)
     date_of_birth = models.DateField()
 
