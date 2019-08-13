@@ -37,7 +37,7 @@ class Car(models.Model):
 
     def __str__(self):
         """Return a String representation of the car"""
-        return self.make + " " + self.model + ", " + year_of_manufacture
+        return self.make + " " + self.model + ", " + self.year_of_manufacture
 
 class BranchInventory(models.Model):
     """Database model for associations between a car and the branch it is located at"""
