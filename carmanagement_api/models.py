@@ -35,7 +35,7 @@ class Car(models.Model):
         validators=[MaxValueValidator(datetime.now().year),]
     )
 
-    def __str(self):
+    def __str__(self):
         """Return a String representation of the car"""
         return self.make + " " + self.model + ", " + year_of_manufacture
 
