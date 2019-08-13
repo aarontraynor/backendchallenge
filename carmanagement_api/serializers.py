@@ -46,7 +46,6 @@ class BranchInventorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BranchInventory
         fields = ('id', 'car', 'branch')
-        depth = 1
         extra_kwargs = {
             'id': {
                 'read_only': True
@@ -59,7 +58,6 @@ class DriverInventorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.DriverInventory
         fields = ('id', 'car', 'driver')
-        depth = 1
         extra_kwargs = {
             'id': {
                 'read_only': True
