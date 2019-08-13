@@ -24,3 +24,9 @@ class DriverViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.DriverSerializer
     queryset = models.Driver.objects.all()
+
+class BranchInventoryViewSet(viewsets.ModelViewSet):
+    """Handle creating, viewing and updating associations between cars and branches"""
+
+    serializer_class = serializers.BranchInventorySerializer
+    queryset = models.BranchInventory.objects.all()
