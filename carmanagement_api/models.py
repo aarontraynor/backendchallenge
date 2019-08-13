@@ -11,7 +11,7 @@ class Branch(models.Model):
 
     def __str__(self):
         """Return a String representation of the branch"""
-        return city + ", " + postcode
+        return self.city + ", " + self.postcode
 
 
 class Driver(models.Model):
