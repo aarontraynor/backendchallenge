@@ -9,7 +9,7 @@ router.register('cars', views.CarViewSet)
 router.register('branches', views.BranchViewSet)
 router.register('drivers', views.DriverViewSet)
 router.register('branch-inventory', views.BranchInventoryViewSet)
-router.register('driver-inventory', views.DriverInventoryViewSet)
+router.register('rent-car', views.DriverInventoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls))
