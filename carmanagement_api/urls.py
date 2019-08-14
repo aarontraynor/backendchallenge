@@ -8,8 +8,8 @@ router = DefaultRouter()
 router.register('cars', views.CarViewSet)
 router.register('branches', views.BranchViewSet)
 router.register('drivers', views.DriverViewSet)
-router.register('branch-inventory', views.BranchInventoryViewSet)
 router.register('rent-car', views.DriverInventoryViewSet)
+router.register('return-car', views.BranchInventoryViewSet)
 
 urlpatterns = [
     path('', include(router.urls))

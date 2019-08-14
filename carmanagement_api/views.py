@@ -38,6 +38,36 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BranchInventorySerializer
     queryset = models.BranchInventory.objects.all()
 
+    def create(self, request):
+        """Remove a Car from a Driver and assign it to a Branch"""
+        serializer = self.serializer_class(data=request.data)
+
+        # Confirm that the given input is valid and return an error if not
+        if serializer.is_valid():
+            car = serializer.validated_data['car']
+            branch = serializer.validated_data['branch']
+
+            # Only proceed if the car is not already with a branch
+            if(models.BranchInventory.objects.filter(car=car).count() == 0):
+                # Remove the car from the driver's inventory
+                models.DriverInventory.objects.filter(car=car).delete()
+
+                # Assign the car to the branch
+                models.BranchInventory.objects.create(
+                    car = car,
+                    branch = branch
+                )
+
+                # Return a message to confirm that the association has been successfully added
+                return Response({'message': f'Car {car} has been returned to {branch}'})
+            else:
+                # Inform the user that the car is already assigned to a branch
+                current_branch = models.BranchInventory.objects.get(car=car).branch
+                return Response({'error': f'Car {car} is already with the branch {current_branch}'}, status.HTTP_400_BAD_REQUEST)
+        else:
+            # Return the error that occurred
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
 class DriverInventoryViewSet(viewsets.ModelViewSet):
     """Handle creating, viewing and updating associations between cars and drivers"""
 
