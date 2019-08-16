@@ -8,6 +8,8 @@ from rest_framework import filters
 from carmanagement_api import serializers
 from carmanagement_api import models
 
+import requests
+
 
 class CarViewSet(viewsets.ModelViewSet):
     """Handle creating, viewing and updating cars in the system"""
@@ -49,7 +51,7 @@ class CarViewSet(viewsets.ModelViewSet):
 
     def get_car_as_json(self, c):
         """Creates a dict used to show a given Car as JSON"""
-        
+
         currently_with_json = {}
 
         # Determine if currently_with is of type Branch or Driver and set attribute accordingly
@@ -88,6 +90,29 @@ class BranchViewSet(viewsets.ModelViewSet):
     queryset = models.Branch.objects.all()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('city', 'postcode')
+
+    def create(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            city = serializer.validated_data['city']
+            postcode = serializer.validated_data['postcode']
+            response_json = requests.get(f'https://api.postcodes.io/postcodes/{postcode}/validate').json()
+
+            if response_json['status'] == 200:
+                if response_json['result'] == True:
+                    branch = models.Branch.objects.create(
+                        city = city,
+                        postcode = postcode
+                    )
+
+                    return Response({'message': f'A branch in {branch} was created successfully.'})
+                else:
+                    return Response({'postcode': 'An invalid postcode was given.'}, status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response({'postcode': 'There was an error validating your postcode. Please try again later.'}, status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 class DriverViewSet(viewsets.ModelViewSet):
     """Handle creating, viewing and updating drivers in the system"""
