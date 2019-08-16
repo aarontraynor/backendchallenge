@@ -139,21 +139,24 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
 
             # Only proceed if the car is not already with a branch
             if(models.BranchInventory.objects.filter(car=car).count() == 0):
-                # Remove the car from the driver's inventory
-                models.DriverInventory.objects.filter(car=car).delete()
+                if branch.capacity > models.BranchInventory.objects.filter(branch=branch).count():
+                    # Remove the car from the driver's inventory
+                    models.DriverInventory.objects.filter(car=car).delete()
 
-                # Assign the car to the branch
-                models.BranchInventory.objects.create(
-                    car = car,
-                    branch = branch
-                )
+                    # Assign the car to the branch
+                    models.BranchInventory.objects.create(
+                        car = car,
+                        branch = branch
+                    )
 
-                # Update the Car's currently_with attribute
-                car.currently_with=branch
-                car.save()
+                    # Update the Car's currently_with attribute
+                    car.currently_with=branch
+                    car.save()
 
-                # Return a message to confirm that the association has been successfully added
-                return Response({'message': f'Car {car} has been returned to {branch}'})
+                    # Return a message to confirm that the association has been successfully added
+                    return Response({'message': f'Car {car} has been returned to {branch}'})
+                else:
+                    return Response({'error': f'The branch {branch} is currently at full capacity.'}, status.HTTP_400_BAD_REQUEST)
             else:
                 # Inform the user that the car is already assigned to a branch
                 current_branch = models.BranchInventory.objects.get(car=car).branch

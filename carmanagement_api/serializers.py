@@ -20,7 +20,7 @@ class BranchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Branch
-        fields = ('id', 'city', 'postcode')
+        fields = ('id', 'city', 'postcode', 'capacity')
         extra_kwargs = {
             'id': {
                 'read_only': True
