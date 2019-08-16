@@ -45,7 +45,7 @@ class Car(models.Model):
         models.Q(app_label='carmanagement_api', model='driver')
     currently_with_type = models.ForeignKey(ContentType, limit_choices_to=limit, on_delete=models.CASCADE, null=True)
     currently_with_id = models.PositiveIntegerField(null=True)
-    content_object = GenericForeignKey('currently_with_type', 'currently_with_id')
+    currently_with = GenericForeignKey('currently_with_type', 'currently_with_id')
 
     def __str__(self):
         """Return a String representation of the car"""

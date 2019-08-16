@@ -11,7 +11,7 @@ class CarSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'id': {'read_only': True},
             'currently_with_type': {'read_only': True},
-            'currently_with_id': {'read_only': True},
+            'currently_with_id': {'read_only': True}
         }
 
 

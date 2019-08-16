@@ -16,6 +16,41 @@ class CarViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('make', 'model', 'year_of_manufacture')
 
+    def list(self, request):
+        """Return a list of cars as a JSON that includes the currently_with information"""
+        car_json = []
+
+        # Create a new Dictionary for each car
+        for c in models.Car.objects.all():
+            currently_with_json = {}
+
+            # Determine if currently_with is of type Branch or Driver and set attribute accordingly
+            if type(c.currently_with) == models.Branch:
+                currently_with_json.update({
+                    'id': c.currently_with.id,
+                    'city': c.currently_with.city,
+                    'postcode': c.currently_with.postcode,
+                })
+            elif type(c.currently_with) == models.Driver:
+                currently_with_json.update({
+                    'id': c.currently_with.id,
+                    'first_name': c.currently_with.first_name,
+                    'middle_names': c.currently_with.middle_names,
+                    'last_name': c.currently_with.last_name,
+                    'date_of_birth': c.currently_with.date_of_birth
+                })
+
+            # Append the current car to the list
+            car_json.append({
+                'id': c.id,
+                'make': c.make,
+                'model': c.model,
+                'year_of_manufacture': c.year_of_manufacture,
+                'currently_with': currently_with_json
+            })
+        return Response(car_json)
+
+
 class BranchViewSet(viewsets.ModelViewSet):
     """Handle creating, viewing and updating branches in the system"""
 
@@ -57,6 +92,9 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
                     car = car,
                     branch = branch
                 )
+                car.currently_with=branch
+                car.save()
+                #models.Car.objects.filter(id=car.id).update(currently_with=models.Branch.objects.get(id=branch.id))
 
                 # Return a message to confirm that the association has been successfully added
                 return Response({'message': f'Car {car} has been returned to {branch}'})
