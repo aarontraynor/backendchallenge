@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -17,38 +18,67 @@ class CarViewSet(viewsets.ModelViewSet):
     search_fields = ('make', 'model', 'year_of_manufacture')
 
     def list(self, request):
-        """Return a list of cars as a JSON that includes the currently_with information"""
-        car_json = []
+        """Custom list implementation to correctly show Cars with currently_with attribute"""
 
-        # Create a new Dictionary for each car
-        for c in models.Car.objects.all():
-            currently_with_json = {}
+        # Arrays used to store results
+        query_results = None
+        cars_json = []
 
-            # Determine if currently_with is of type Branch or Driver and set attribute accordingly
-            if type(c.currently_with) == models.Branch:
-                currently_with_json.update({
-                    'id': c.currently_with.id,
-                    'city': c.currently_with.city,
-                    'postcode': c.currently_with.postcode,
-                })
-            elif type(c.currently_with) == models.Driver:
-                currently_with_json.update({
-                    'id': c.currently_with.id,
-                    'first_name': c.currently_with.first_name,
-                    'middle_names': c.currently_with.middle_names,
-                    'last_name': c.currently_with.last_name,
-                    'date_of_birth': c.currently_with.date_of_birth
-                })
+        # Get all cars if no search parameter is provided, or get only matching cars if there is one given
+        if request.query_params.get('search') == None:
+            # Get all cars in the database
+            query_results = models.Car.objects.all()
+        else:
+            # Get all cars in the database that match the search string given in either the make, model or year of manufacture
+            search_str = request.query_params.get('search')
+            query_results = models.Car.objects.filter(Q(make__contains=search_str) | Q(model__contains=search_str) | Q(year_of_manufacture__contains=search_str))
 
-            # Append the current car to the list
-            car_json.append({
-                'id': c.id,
-                'make': c.make,
-                'model': c.model,
-                'year_of_manufacture': c.year_of_manufacture,
-                'currently_with': currently_with_json
+        # Generate a dict for each car
+        for c in list(query_results):
+            cars_json = cars_json + [self.get_car_as_json(c),]
+
+        # Return the response as JSON
+        return Response({"cars": cars_json})
+
+    def retrieve(self, request, pk=None):
+        """Custom retrieve implementation to correctly show a Car with currently_with attribute"""
+
+        c = models.Car.objects.get(pk=pk)
+
+        return Response(self.get_car_as_json(c))
+
+    def get_car_as_json(self, c):
+        """Creates a dict used to show a given Car as JSON"""
+        
+        currently_with_json = {}
+
+        # Determine if currently_with is of type Branch or Driver and set attribute accordingly
+        if type(c.currently_with) == models.Branch:
+            currently_with_json.update({
+                'id': c.currently_with.id,
+                'city': c.currently_with.city,
+                'postcode': c.currently_with.postcode,
             })
-        return Response(car_json)
+        elif type(c.currently_with) == models.Driver:
+            currently_with_json.update({
+                'id': c.currently_with.id,
+                'first_name': c.currently_with.first_name,
+                'middle_names': c.currently_with.middle_names,
+                'last_name': c.currently_with.last_name,
+                'date_of_birth': c.currently_with.date_of_birth
+            })
+        else:
+            currently_with_json.update({
+                'message': 'Currently unassigned. Please assign this car to a Branch or Driver'
+            })
+
+        return {
+            'id': c.id,
+            'make': c.make,
+            'model': c.model,
+            'year_of_manufacture': c.year_of_manufacture,
+            'currently_with': currently_with_json
+        }
 
 
 class BranchViewSet(viewsets.ModelViewSet):

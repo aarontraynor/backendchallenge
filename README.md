@@ -10,7 +10,7 @@ This code challenge allows you to demonstrate your ability to build a simple web
 
 ## The Challenge
 
-We deal with lots and lots of cars on a day-to-day basis, so naturally this will be related to automotives. 
+We deal with lots and lots of cars on a day-to-day basis, so naturally this will be related to automotives.
 
 Imagine you have a car rental business. You have multiple **Branches**. A car can either be at a **Branch** or with a **Driver**.
 
@@ -18,16 +18,16 @@ Imagine you have a car rental business. You have multiple **Branches**. A car ca
 
 Your task is to develop one (or more, feel free) RESTful service(s) to:
 
-- Create a Car
-- Update a Car information
-- Retrieve a Car by parameters
-- Create a Branch
-- Retrieve a Branch by parameters
-- Create a Driver
-- Retrieve a Driver by parameters
-- Assign a Car to a Driver (i.e. the car is being rented out)
-- Assign a Car to a Branch (i.e. the car has been returned)
-- Fork this repository and submit your code with commits.
+- Create a Car [Yes]
+- Update a Car information [Yes]
+- Retrieve a Car by parameters [Yes]
+- Create a Branch [Yes]
+- Retrieve a Branch by parameters [Yes]
+- Create a Driver [Yes]
+- Retrieve a Driver by parameters [Yes]
+- Assign a Car to a Driver (i.e. the car is being rented out) [Yes]
+- Assign a Car to a Branch (i.e. the car has been returned) [Yes]
+- Fork this repository and submit your code with commits. [Yes]
 
 This is the information we store about each car:
 - Make (e.g. Tesla)
@@ -53,7 +53,7 @@ Before you get started, make sure to read through all the levels below.
 
 #### Levels of Awesome
 
-Choose one of the following routes for your journey. 
+Choose one of the following routes for your journey.
 
 -------
 ### Novice
@@ -91,4 +91,4 @@ Choose one of the following routes for your journey.
 *"All is fair in love and bonus rounds"*
 
 **TASKS**
-+ Surprise us! Add a feature that you think would work well here; for instance, advanced search, integration with other API, a "Favorite" functionality 
++ Surprise us! Add a feature that you think would work well here; for instance, advanced search, integration with other API, a "Favorite" functionality
