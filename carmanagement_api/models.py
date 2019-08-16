@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 from datetime import datetime
 
 # Create your models here.
@@ -37,6 +39,13 @@ class Car(models.Model):
         # Ensure that the year of manufacture is not later than the current year
         validators=[MaxValueValidator(datetime.now().year),]
     )
+
+    # Generic foreign key can take type Branch or Driver
+    limit = models.Q(app_label='carmanagement_api', model='branch') | \
+        models.Q(app_label='carmanagement_api', model='driver')
+    currently_with_type = models.ForeignKey(ContentType, limit_choices_to=limit, on_delete=models.CASCADE, null=True)
+    currently_with_id = models.PositiveIntegerField(null=True)
+    content_object = GenericForeignKey('currently_with_type', 'currently_with_id')
 
     def __str__(self):
         """Return a String representation of the car"""
