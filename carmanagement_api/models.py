@@ -49,7 +49,7 @@ class BranchInventory(models.Model):
 
     def __str__(self):
         """Return a String representation of the car/branch association"""
-        return self.car + " is at " + self.branch
+        return f'{self.car} is at {self.branch}'
 
 class DriverInventory(models.Model):
     """Database model for associations between a car and the driver that is in posession of it"""
@@ -58,4 +58,4 @@ class DriverInventory(models.Model):
 
     def __str__(self):
         """Return a String representation of the car/driver association"""
-        return self.car + " is with " + self.driver
+        return f'{self.car} is with {self.driver}'
