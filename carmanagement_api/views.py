@@ -92,9 +92,10 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
                     car = car,
                     branch = branch
                 )
+
+                # Update the Car's currently_with attribute
                 car.currently_with=branch
                 car.save()
-                #models.Car.objects.filter(id=car.id).update(currently_with=models.Branch.objects.get(id=branch.id))
 
                 # Return a message to confirm that the association has been successfully added
                 return Response({'message': f'Car {car} has been returned to {branch}'})
@@ -131,6 +132,10 @@ class DriverInventoryViewSet(viewsets.ModelViewSet):
                     car = car,
                     driver = driver
                 )
+
+                # Update the Car's currently_with attribute
+                car.currently_with=driver
+                car.save()
 
                 # Return a message to confirm that the association has been successfully added
                 return Response({'message': f'Car {car} has been assigned to Driver {driver}'})
