@@ -1,3 +1,25 @@
+Setup instructions
+====================
+
+The following instructions will guide you through how to get up and running with this project on your local machine.
+
+## Prerequisites
+
+Running this project requires the following software to be installed:
+
+- VirtualBox (https://www.virtualbox.org/)
+- Vagrant (https://www.vagrantup.com/downloads.html)
+- Atom (https://atom.io/)
+- Git (https://git-scm.com/downloads)
+
+## MacOS
+
+#### Setting up the workspace
+1. Create a new folder where you would like the project to reside. For this example, we will use a folder called "workspace" in the home directory ```~/workspace```
+2. In a terminal window, type ```cd ~/workspace```, remembering to replace the path with your own path if you are working in a different location.
+3. Type ```git clone https://github.com/aarontraynor/backendchallenge.git``` to copy the GitHub repo into your local folder.
+4. To confirm that the files have cloned correctly, type ```ls```. You should see that a folder named "backendchallenge" has now appeared.
+
 pip install requests
 https://postcodes.io/
 
@@ -33,18 +55,18 @@ Your task is to develop one (or more, feel free) RESTful service(s) to:
 - Fork this repository and submit your code with commits. [Yes]
 
 This is the information we store about each car:
-- Make (e.g. Tesla)
-- Model (e.g. Model 3)
-- Year (e.g. 2019)
-- Currently_With (options: \[Garage\], \[Driver\])
+- Make (e.g. Tesla) [Yes]
+- Model (e.g. Model 3) [Yes]
+- Year (e.g. 2019) [Yes]
+- Currently_With (options: \[Garage\], \[Driver\]) [Yes]
 
 This is the information we store about each Branch:
-- City (e.g. London)
-- Postcode (e.g. W6 9EA)
+- City (e.g. London) [Yes]
+- Postcode (e.g. W6 9EA) [Yes]
 
 This is the information we store about each Driver:
-- Name (e.g. Kevin Hart)
-- Date of Birth (e.g. 02/12/1990)
+- Name (e.g. Kevin Hart) [Yes]
+- Date of Birth (e.g. 02/12/1990) [Yes]
 
 Before you get started, make sure to read through all the levels below.
 

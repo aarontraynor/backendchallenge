@@ -10,6 +10,7 @@ class Branch(models.Model):
     """Database model for branches in the system"""
     city = models.CharField(max_length=50)
     postcode = models.CharField(max_length=8)
+    capacity = models.PositiveIntegerField()
 
     def __str__(self):
         """Return a String representation of the branch"""
