@@ -12,16 +12,40 @@ Running this project requires the following software to be installed:
 - Atom (https://atom.io/)
 - Git (https://git-scm.com/downloads)
 
-## MacOS
+**PLEASE NOTE:** Installing git on Windows requires some additional setup. To run this project on Windows, please follow the "Git on Windows" steps below before continuing. For Unix-based systems, git can be installed as normal without any custom setup.
+
+#### Git on Windows
+In order to follow the instructions below, we must install both git and git bash.
+1. Download the installer from https://git-scm.com/downloads.
+2. Click next until you reach the "Adjusting your PATH environment" window.
+3. Select the option "Git from the command line and also from 3rd party software".
+4. Select the "Use the OpenSSL library" option.
+5. Click next until the installation is complete.
+6. Check that the "Git Bash" desktop app has been installed. This will be used in the instructions below.
 
 #### Setting up the workspace
+**Windows Users:** These instructions will refer to the terminal window from time to time. On Windows, this is substituted for the "Git Bash" desktop app that was installed as part of the git install process.
+
 1. Create a new folder where you would like the project to reside. For this example, we will use a folder called "workspace" in the home directory ```~/workspace```
 2. In a terminal window, type ```cd ~/workspace```, remembering to replace the path with your own path if you are working in a different location.
 3. Type ```git clone https://github.com/aarontraynor/backendchallenge.git``` to copy the GitHub repo into your local folder.
 4. To confirm that the files have cloned correctly, type ```ls```. You should see that a folder named "backendchallenge" has now appeared.
+5. Type ```cd backendchallenge``` to enter the repository.
+6. Type ```vagrant up``` in the terminal window to set up and run the Vagrant virtual environment.
+7. Connect to the Vagrant environment by typing ```vagrant ssh``` in the terminal window.
+8. In the Vagrant ssh window, type ```cd /vagrant```.
+9. Type ```ls```. You should see that the files mirror the repository. This folder in the vagrant environment is synchronised with the local copy of the repo. Any changes made to the local copy will reflect in the Vagrant environment.
+10. Set up a Python virtual environment (venv) by typing ```python -m venv ~/env``` in the ssh window.
+11. Enable the Python venv by typing ```source ~/env/bin/activate```.
+12. In the Python venv, type ```pip install -r requirements.txt```. This will install all the Python requirements for this project.
+13. Type ```python manage.py migrate``` in the Python venv to set up the database.
+13. Type ```python manage.py runserver 0.0.0.0:8000``` to enable the server.
 
-pip install requests
-https://postcodes.io/
+The project is now running locally on your machine. You can access the browsable API at http://localhost:8000/api
+
+## 3rd Party Integrations
+
+UK Postcode Validation: https://postcodes.io/
 
 Back End Challenge
 ====================
