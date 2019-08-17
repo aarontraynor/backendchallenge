@@ -68,14 +68,14 @@ A car has the following JSON format:
 - Cars can be searched on by the `make`, `model` and `year_of_manufacture` fields.
 
 **GET** Requests
-- List all cars: GET /api/cars/
-- Retrieve a specific car: GET /api/cars/<id>
-- Search cars: GET /api/cars/?search=<search_string>
+- List all cars: `GET /api/cars/`
+- Retrieve a specific car: `GET /api/cars/<id>`
+- Search cars: `GET /api/cars/?search=<search_string>`
 
 **POST/PUT/PATCH** Requests
-- Add a new car: POST /api/cars/
-- Update a car's information: PUT /api/cars/<id>
-- Update some attributes of a car: PATCH /api/cars/<id>
+- Add a new car: `POST /api/cars/`
+- Update a car's information: `PUT /api/cars/<id>`
+- Update some attributes of a car: `PATCH /api/cars/<id>`
 
 #### Branches
 
@@ -93,14 +93,14 @@ A branch has the following JSON format:
 - Branches can be searched on the `city` and `postcode` fields.
 
 **GET** Requests
-- List all branches: GET /api/branches/
-- Retrieve a specific branch: GET /api/branches/<id>
-- Search branches: GET /api/branches/?search=<search_string>
+- List all branches: `GET /api/branches/`
+- Retrieve a specific branch: `GET /api/branches/<id>`
+- Search branches: `GET /api/branches/?search=<search_string>`
 
 **POST/PUT/PATCH** Requests
-- Add a new branch: POST /api/branches/
-- Update a branch's information: PUT /api/branches/<id>
-- Update some attributes of a branch: PATCH /api/branches/<id>
+- Add a new branch: `POST /api/branches/`
+- Update a branch's information: `PUT /api/branches/<id>`
+- Update some attributes of a branch: `PATCH /api/branches/<id>`
 
 #### Drivers
 
@@ -119,14 +119,14 @@ A driver has the following JSON format:
 - Drivers can be searched on the `first_name`, `middle_names`, `last_name` and `date_of_birth` fields.
 
 **GET** Requests
-- List all drivers: GET /api/drivers/
-- Retrieve a specific driver: GET /api/drivers/<id>
-- Search branches: GET /api/branches/?search=<search_string>
+- List all drivers: `GET /api/drivers/`
+- Retrieve a specific driver: `GET /api/drivers/<id>`
+- Search branches: `GET /api/branches/?search=<search_string>`
 
 **POST/PUT/PATCH** Requests
-- Add a new driver: POST /api/drivers/
-- Update a driver's information: PUT /api/drivers/<id>
-- Update some attributes of a driver: PATCH /api/drivers/<id>
+- Add a new driver: `POST /api/drivers/`
+- Update a driver's information: `PUT /api/drivers/<id>`
+- Update some attributes of a driver: `PATCH /api/drivers/<id>`
 
 #### Car Rental
 
@@ -144,11 +144,11 @@ A car rental has the following JSON format:
 - Renting a car will remove any links between a car and a branch.
 
 **GET** Requests
-- List all car rentals: GET /api/rent-car/
-- Retrieve a specific car rental: GET /api/rent-car/<id>
+- List all car rentals: `GET /api/rent-car/`
+- Retrieve a specific car rental: `GET /api/rent-car/<id>`
 
 **POST/PUT/PATCH** Requests
-- Add a new rental: POST /api/rent-car/
+- Add a new rental: `POST /api/rent-car/`
 
 #### Branch Inventory
 
@@ -166,11 +166,11 @@ A vehicle in a branch's inventory has the following JSON format:
 - Returning a car to a branch will remove any links between a car and a driver.
 
 **GET** Requests
-- List all cars at branches: GET /api/return-car/
-- Retrieve a specific car/branch association: GET /api/return-car/<id>
+- List all cars at branches: `GET /api/return-car/`
+- Retrieve a specific car/branch association: `GET /api/return-car/<id>`
 
 **POST/PUT/PATCH** Requests
-- Return a car to a branch: POST /api/return-car/
+- Return a car to a branch: `POST /api/return-car/`
 
 Back End Challenge
 ====================
