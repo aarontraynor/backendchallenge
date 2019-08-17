@@ -47,9 +47,10 @@ The project is now running locally on your machine. You can access the browsable
 
 UK Postcode Validation: https://postcodes.io/
 
-## How to use the API
+How to use the API
+==================
 
-#### Cars
+## Cars
 
 A car has the following JSON format:
 ```
@@ -77,7 +78,7 @@ A car has the following JSON format:
 - Update a car's information: `PUT /api/cars/<id>`
 - Update some attributes of a car: `PATCH /api/cars/<id>`
 
-#### Branches
+## Branches
 
 A branch has the following JSON format:
 ```
@@ -102,7 +103,7 @@ A branch has the following JSON format:
 - Update a branch's information: `PUT /api/branches/<id>`
 - Update some attributes of a branch: `PATCH /api/branches/<id>`
 
-#### Drivers
+## Drivers
 
 A driver has the following JSON format:
 ```
@@ -128,7 +129,7 @@ A driver has the following JSON format:
 - Update a driver's information: `PUT /api/drivers/<id>`
 - Update some attributes of a driver: `PATCH /api/drivers/<id>`
 
-#### Car Rental
+## Car Rental
 
 A car rental has the following JSON format:
 ```
@@ -151,7 +152,7 @@ A car rental has the following JSON format:
 **POST/PUT/PATCH** Requests
 - Add a new rental: `POST /api/rent-car/`
 
-#### Branch Inventory
+## Branch Inventory
 
 A vehicle in a branch's inventory has the following JSON format:
 ```
