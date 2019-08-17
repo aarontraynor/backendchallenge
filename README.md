@@ -41,11 +41,136 @@ In order to follow the instructions below, we must install both git and git bash
 13. Type ```python manage.py migrate``` in the Python venv to set up the database.
 13. Type ```python manage.py runserver 0.0.0.0:8000``` to enable the server.
 
-The project is now running locally on your machine. You can access the browsable API at http://localhost:8000/api
+The project is now running locally on your machine. You can access the browsable API at http://localhost:8000/api/
 
 ## 3rd Party Integrations
 
 UK Postcode Validation: https://postcodes.io/
+
+## How to use the API
+
+#### Cars
+
+A car has the following JSON format:
+```
+{
+  "id": Integer,
+  "make": String,
+  "model": String,
+  "year_of_manufacture": Integer,
+  "currently_with": {
+      JSON representation of either a Branch or Driver, depending on who the car is currently with
+  }
+}
+```
+
+- The `make`, `model` and `year_of_manufacture` fields can be set by the user.
+- Cars can be searched on by the `make`, `model` and `year_of_manufacture` fields.
+
+**GET** Requests
+- List all cars: GET /api/cars/
+- Retrieve a specific car: GET /api/cars/<id>
+- Search cars: GET /api/cars/?search=<search_string>
+
+**POST/PUT/PATCH** Requests
+- Add a new car: POST /api/cars/
+- Update a car's information: PUT /api/cars/<id>
+- Update some attributes of a car: PATCH /api/cars/<id>
+
+#### Branches
+
+A branch has the following JSON format:
+```
+{
+    "id": Integer,
+    "city": String,
+    "postcode": String,
+    "capacity": Integer
+}
+```
+
+- The `city`, `postcode` and `capacity` fields can be set by the user.
+- Branches can be searched on the `city` and `postcode` fields.
+
+**GET** Requests
+- List all branches: GET /api/branches/
+- Retrieve a specific branch: GET /api/branches/<id>
+- Search branches: GET /api/branches/?search=<search_string>
+
+**POST/PUT/PATCH** Requests
+- Add a new branch: POST /api/branches/
+- Update a branch's information: PUT /api/branches/<id>
+- Update some attributes of a branch: PATCH /api/branches/<id>
+
+#### Drivers
+
+A driver has the following JSON format:
+```
+{
+    "id": Integer,
+    "first_name": String,
+    "middle_names": String (can be null),
+    "last_name": String,
+    "date_of_birth": Date
+}
+```
+
+- The `first_name`, `middle_names`, `last_name` and `date_of_birth` fields can be set by the user.
+- Drivers can be searched on the `first_name`, `middle_names`, `last_name` and `date_of_birth` fields.
+
+**GET** Requests
+- List all drivers: GET /api/drivers/
+- Retrieve a specific driver: GET /api/drivers/<id>
+- Search branches: GET /api/branches/?search=<search_string>
+
+**POST/PUT/PATCH** Requests
+- Add a new driver: POST /api/drivers/
+- Update a driver's information: PUT /api/drivers/<id>
+- Update some attributes of a driver: PATCH /api/drivers/<id>
+
+#### Car Rental
+
+A car rental has the following JSON format:
+```
+{
+    "id": Integer,
+    "car": Foreign Key,
+    "driver": Foreign Key
+}
+```
+
+- The `car` and `driver` fields can be set by the user.
+- Renting a car will update the Car's `currently_with` field.
+- Renting a car will remove any links between a car and a branch.
+
+**GET** Requests
+- List all car rentals: GET /api/rent-car/
+- Retrieve a specific car rental: GET /api/rent-car/<id>
+
+**POST/PUT/PATCH** Requests
+- Add a new rental: POST /api/rent-car/
+
+#### Branch Inventory
+
+A vehicle in a branch's inventory has the following JSON format:
+```
+{
+    "id": Integer,
+    "car": Foreign Key,
+    "branch": Foreign Key
+}
+```
+
+- The `car` and `branch` fields can be set by the user.
+- Returning a car to a branch will update the Car's `currently_with` field.
+- Returning a car to a branch will remove any links between a car and a driver.
+
+**GET** Requests
+- List all cars at branches: GET /api/return-car/
+- Retrieve a specific car/branch association: GET /api/return-car/<id>
+
+**POST/PUT/PATCH** Requests
+- Return a car to a branch: POST /api/return-car/
 
 Back End Challenge
 ====================
