@@ -142,6 +142,7 @@ A car rental has the following JSON format:
 - The `car` and `driver` fields can be set by the user.
 - Renting a car will update the Car's `currently_with` field.
 - Renting a car will remove any links between a car and a branch.
+- Car rentals can only be added using `POST` requests - they cannot be updated once created.
 
 **GET** Requests
 - List all car rentals: `GET /api/rent-car/`
@@ -164,6 +165,7 @@ A vehicle in a branch's inventory has the following JSON format:
 - The `car` and `branch` fields can be set by the user.
 - Returning a car to a branch will update the Car's `currently_with` field.
 - Returning a car to a branch will remove any links between a car and a driver.
+- Car/Branch associations can only be added using `POST` requests - they cannot be updated once created.
 
 **GET** Requests
 - List all cars at branches: `GET /api/return-car/`

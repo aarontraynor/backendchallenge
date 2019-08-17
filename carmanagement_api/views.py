@@ -127,6 +127,7 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.BranchInventorySerializer
     queryset = models.BranchInventory.objects.all()
+    http_method_names = ['get', 'post', 'head']
 
     def create(self, request):
         """Remove a Car from a Driver and assign it to a Branch"""
@@ -170,6 +171,7 @@ class DriverInventoryViewSet(viewsets.ModelViewSet):
 
     serializer_class = serializers.DriverInventorySerializer
     queryset = models.DriverInventory.objects.all()
+    http_method_names = ['get', 'post', 'head']
 
     def create(self, request):
         """Remove a Car from a Branch and assign it to a Driver"""
