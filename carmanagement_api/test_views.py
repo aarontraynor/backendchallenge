@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.test import Client
 
+from rest_framework import status
+
 from carmanagement_api.models import Branch, Driver, Car, BranchInventory, DriverInventory
 from datetime import date
 
@@ -38,6 +40,24 @@ class CarViewSetTestCase(TestCase):
                 }
             ]
         })
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_empty_POST_returns_400(self):
+        c = Client()
+        response = c.post("/api/cars/")
+
+        self.assertEqual(response.json(), {
+            "make": [
+                "This field is required."
+            ],
+            "model": [
+                "This field is required."
+            ],
+            "year_of_manufacture": [
+                "This field is required."
+            ]
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 class BranchViewSetTestCase(TestCase):
     def setUp(self):
@@ -62,6 +82,21 @@ class BranchViewSetTestCase(TestCase):
                 "capacity": 5
             }
         ])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_empty_POST_returns_400(self):
+        c = Client()
+        response = c.post("/api/branches/")
+
+        self.assertEqual(response.json(), {
+            "city": [
+                "This field is required."
+            ],
+            "postcode": [
+                "This field is required."
+            ]
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 class DriverViewSetTestCase(TestCase):
@@ -89,6 +124,24 @@ class DriverViewSetTestCase(TestCase):
                 "date_of_birth": "1990-01-01"
             }
         ])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_empty_POST_returns_400(self):
+        c = Client()
+        response = c.post("/api/drivers/")
+
+        self.assertEqual(response.json(), {
+            "first_name": [
+                "This field is required."
+            ],
+            "last_name": [
+                "This field is required."
+            ],
+            "date_of_birth": [
+                "This field is required."
+            ]
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 # class BranchInventoryViewSetTestCase(TestCase):
 #     def setUp(self):
