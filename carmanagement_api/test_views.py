@@ -60,6 +60,56 @@ class CarViewSetTestCase(TestCase):
         })
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_adding_car(self):
+        c = Client()
+        response = c.post("/api/cars/", {
+            "make": "Reliant",
+            "model": "Robin Mk2",
+            "year_of_manufacture": 1990
+        })
+
+        self.assertEqual(response.json()), {
+            "id": Car.objects.get(make="Reliant").id,
+            "make": "Reliant",
+            "model": "Robin Mk2",
+            "year_of_manufacture": 1990
+        }
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_adding_car_with_invalid_year(self):
+        c = Client()
+        response = c.post("/api/cars/", {
+            "make": "Tesla",
+            "model": "Model Y",
+            "year_of_manufacture": 2020
+        })
+
+        self.assertEqual(response.json(), {
+            "year_of_manufacture": [
+                f"Ensure this value is less than or equal to {datetime.now().year}."
+            ]
+        })
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieving_specific_car(self):
+        car = Car.objects.get(make="Ford")
+        c = Client()
+        response = c.get("/api/cars/1")
+
+        self.assertEqual(response.json(), {
+            "id": 1,
+            "make": car.make,
+            "model": car.model,
+            "year_of_manufacture": car.year_of_manufacture,
+            "currently_with": {
+                "message": "Currently unassigned. Please assign this car to a Branch or Driver",
+            }
+        })
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 class BranchViewSetTestCase(TestCase):
     """Tests for the Branch ViewSet"""
@@ -181,6 +231,7 @@ class BranchInventoryViewSetTestCase(TestCase):
                 "branch": branch2.id
             }
         ])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
 class DriverInventoryViewSetTestCase(TestCase):
@@ -215,3 +266,4 @@ class DriverInventoryViewSetTestCase(TestCase):
                 "driver": driver2.id
             }
         ])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
