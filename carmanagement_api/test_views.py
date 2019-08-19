@@ -16,6 +16,7 @@ class CarViewSetTestCase(TestCase):
         Car.objects.create(make="Tesla", model="Model S", year_of_manufacture=2016)
 
     def test_cars_list_correctly(self):
+        """Test that the list of cars currently in the system shows correctly"""
         c = Client()
         response = c.get("/api/cars/")
 
@@ -44,6 +45,7 @@ class CarViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_empty_POST_returns_400(self):
+        """Test that attempting to create a car with no information returns a HTTP 400 status"""
         c = Client()
         response = c.post("/api/cars/")
 
@@ -61,6 +63,7 @@ class CarViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_adding_car(self):
+        """Test that adding a new car adds the car successfully"""
         c = Client()
         response = c.post("/api/cars/", {
             "make": "Reliant",
@@ -80,6 +83,7 @@ class CarViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_adding_car_with_invalid_year(self):
+        """Test that adding a car with an invalid year of manufacture returns an error"""
         c = Client()
         response = c.post("/api/cars/", {
             "make": "Tesla",
@@ -96,6 +100,7 @@ class CarViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_retrieving_specific_car(self):
+        """Test that getting information for a specific car returns the correct information"""
         car = Car.objects.get(make="Ford")
         c = Client()
         response = c.get("/api/cars/1/")
@@ -121,6 +126,7 @@ class BranchViewSetTestCase(TestCase):
         Branch.objects.create(city="Welling", postcode="DA16 3RR", capacity=5)
 
     def test_branches_list_correctly(self):
+        """Test that the list of branches currently in the system shows correctly"""
         c = Client()
         response = c.get("/api/branches/")
 
@@ -141,6 +147,7 @@ class BranchViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_empty_POST_returns_400(self):
+        """Test that attempting to create a branch with no information returns a HTTP 400 status"""
         c = Client()
         response = c.post("/api/branches/")
 
@@ -155,6 +162,7 @@ class BranchViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_retrieving_specific_branch(self):
+        """Test that requesting a specific branch returns the correct information"""
         c = Client()
         response = c.get("/api/branches/1/")
 
@@ -168,6 +176,7 @@ class BranchViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_creating_branch_with_invalid_postcode(self):
+        """Test that creating a branch with an invalid postcode returns an error"""
         c = Client()
         response = c.post("/api/branches/", {
             "city": "London",
@@ -180,6 +189,7 @@ class BranchViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_creating_branch_with_too_short_postcode(self):
+        """Test that creating a branch with a postcode that is too short returns an error"""
         c = Client()
         response = c.post("/api/branches/", {
             "city": "London",
@@ -192,6 +202,7 @@ class BranchViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_creating_branch_with_too_long_postcode(self):
+        """Test that creating a branch with a postcode that is too long returns an error"""
         c = Client()
         response = c.post("/api/branches/", {
             "city": "London",
@@ -213,6 +224,7 @@ class DriverViewSetTestCase(TestCase):
         Driver.objects.create(first_name="Joe", last_name="Bloggs", date_of_birth="1990-01-01")
 
     def test_drivers_list_correctly(self):
+        """Test that the list of drivers in the system shows correctly"""
         c = Client()
         response = c.get("/api/drivers/")
 
@@ -235,6 +247,7 @@ class DriverViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_empty_POST_returns_400(self):
+        """Test that attempting to create a new driver with no information returns a HTTP 400 status"""
         c = Client()
         response = c.post("/api/drivers/")
 
@@ -252,6 +265,7 @@ class DriverViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_adding_new_driver(self):
+        """Test that adding a new driver creates the driver successfully"""
         c = Client()
         response = c.post("/api/drivers/", {
             "first_name": "John",
@@ -270,6 +284,7 @@ class DriverViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_adding_new_driver_with_no_middle_name(self):
+        """Test that adding a new driver with no middle names creates successfully"""
         c = Client()
         response = c.post("/api/drivers/", {
             "first_name": "Michael",
@@ -298,6 +313,7 @@ class BranchInventoryViewSetTestCase(TestCase):
         BranchInventory.objects.create(car=car2, branch=branch2)
 
     def test_branch_inventory_lists_correctly(self):
+        """Test that branch inventory details currently in the system show correctly"""
         car1 = Car.objects.get(make="Ford")
         car2 = Car.objects.get(make="Tesla")
         branch1 = Branch.objects.get(postcode="WC2B 6ST")
@@ -321,6 +337,7 @@ class BranchInventoryViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_adding_car_to_branch(self):
+        """Test that adding a car to a branch creates the association successfully"""
         car = Car.objects.create(make="LEVC", model="TX", year_of_manufacture=2018)
         branch = Branch.objects.get(postcode="WC2B 6ST")
 
@@ -336,6 +353,7 @@ class BranchInventoryViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_adding_car_to_full_branch(self):
+        """Test that adding a car to a full branch returns an error"""
         car = Car.objects.create(make="Toyota", model="Prius", year_of_manufacture=2014)
         branch = Branch.objects.get(postcode="DA16 3RR")
 
@@ -363,6 +381,7 @@ class DriverInventoryViewSetTestCase(TestCase):
         DriverInventory.objects.create(car=car2, driver=driver2)
 
     def test_driver_inventory_lists_correctly(self):
+        """Test that listing the car-driver associations shows correctly"""
         car1 = Car.objects.get(make="Ford")
         car2 = Car.objects.get(make="Tesla")
         driver1 = Driver.objects.get(first_name="Aaron")
@@ -384,3 +403,34 @@ class DriverInventoryViewSetTestCase(TestCase):
             }
         ])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_renting_car_to_driver(self):
+        """Test that renting a car to a driver creates the association successfully"""
+        car = Car.objects.create(make="Ford", model="Transit", year_of_manufacture=2017)
+        driver = Driver.objects.get(first_name="Aaron")
+
+        c = Client()
+        response = c.post("/api/rent-car/", {
+            "car": car.id,
+            "driver": driver.id
+        })
+
+        self.assertEqual(response.json(), {
+            "message": f"Car {car.__str__()} has been assigned to Driver {driver.__str__()}"
+        })
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_renting_car_that_is_already_rented(self):
+        """Test that attempting to rent out a car that is already rented out returns an error"""
+        car = Car.objects.get(make="Tesla")
+        driver = Driver.objects.get(first_name="Aaron")
+
+        c = Client()
+        response = c.post("/api/rent-car/", {
+            "car": car.id,
+            "driver": driver.id
+        })
+
+        self.assertEqual(response.json(), {
+            "error": f"Car {car.__str__()} is already assigned to {DriverInventory.objects.get(car=car).driver.__str__()}"
+        })
