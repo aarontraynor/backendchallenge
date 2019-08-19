@@ -151,7 +151,7 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
                     )
 
                     # Update the Car's currently_with attribute
-                    car.currently_with=branch
+                    car.currently_with = branch
                     car.save()
 
                     # Return a message to confirm that the association has been successfully added
@@ -161,7 +161,17 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
             else:
                 # Inform the user that the car is already assigned to a branch
                 current_branch = models.BranchInventory.objects.get(car=car).branch
-                return Response({'error': f'Car {car} is already with the branch {current_branch}'}, status.HTTP_400_BAD_REQUEST)
+                models.BranchInventory.objects.filter(car=car).delete()
+
+                models.BranchInventory.objects.create(
+                    car = car,
+                    branch = branch
+                )
+
+                car.currently_with = branch
+                car.save()
+
+                return Response({'message': f'Car {car} has been moved from {current_branch} to {branch}'}, status.HTTP_201_CREATED)
         else:
             # Return the error that occurred
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)

@@ -368,6 +368,23 @@ class BranchInventoryViewSetTestCase(TestCase):
         })
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_moving_car_from_one_branch_to_another(self):
+        """Test that assigning a car to a branch that is already assigned to another branch moves the car successfully"""
+        car = Car.objects.get(make=Tesla)
+        new_branch = Branch.objects.get(postcode="WC2B 6ST")
+        current_branch = car.branch
+
+        c = Client()
+        response = c.post("/api/return-car/", {
+            "car": car.id,
+            "branch": new_branch.id
+        })
+
+        self.assertEqual(response.json(), {
+            "message": f"Car {car.__str__()} has been moved from {current_branch.__str__()} to {new_branch.__str__()}"
+        })
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
 class DriverInventoryViewSetTestCase(TestCase):
     """Tests for DriverInventory (renting a car) ViewSet"""
