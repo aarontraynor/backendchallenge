@@ -13,7 +13,7 @@ import requests
 
 class CarViewSet(viewsets.ModelViewSet):
     """Handle creating, viewing and updating cars in the system"""
-
+    # Setup
     serializer_class = serializers.CarSerializer
     queryset = models.Car.objects.all()
     filter_backends = (filters.SearchFilter,)
@@ -44,9 +44,7 @@ class CarViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         """Custom retrieve implementation to correctly show a Car with currently_with attribute"""
-
         c = models.Car.objects.get(pk=pk)
-
         return Response(self.get_car_as_json(c))
 
     def get_car_as_json(self, c):
@@ -85,13 +83,14 @@ class CarViewSet(viewsets.ModelViewSet):
 
 class BranchViewSet(viewsets.ModelViewSet):
     """Handle creating, viewing and updating branches in the system"""
-
+    # Setup
     serializer_class = serializers.BranchSerializer
     queryset = models.Branch.objects.all()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('city', 'postcode')
 
     def create(self, request):
+        """Custom implementation of create method to include postcode validation"""
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
