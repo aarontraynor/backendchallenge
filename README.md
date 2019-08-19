@@ -60,7 +60,7 @@ UK Postcode Validation: https://postcodes.io/
 How to use the API
 ==================
 
-The browsable API at http://localhost:8000/api provides an easy way to navigate the system and try out the available features. If you are using a browser and wish to receive the raw JSON response from the server, append `?format=json` (or `&format=json` if your request already contains a search parameter) to your API request.
+The browsable API at http://localhost:8000/api or http://ottocar.aarontraynor.uk:8080/api provides an easy way to navigate the system and try out the available features. If you are using a browser and wish to receive the raw JSON response from the server, append `?format=json` (or `&format=json` if your request already contains a search parameter) to your API request.
 
 ## Cars
 
