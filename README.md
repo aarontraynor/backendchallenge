@@ -188,6 +188,8 @@ A vehicle in a branch's inventory has the following JSON format:
 **POST/PUT/PATCH** Requests
 - Return a car to a branch: `POST /api/return-car/`
 
+--------------------
+
 Back End Challenge
 ====================
 
@@ -208,30 +210,30 @@ Imagine you have a car rental business. You have multiple **Branches**. A car ca
 
 Your task is to develop one (or more, feel free) RESTful service(s) to:
 
-- Create a Car [Yes]
-- Update a Car information [Yes]
-- Retrieve a Car by parameters [Yes]
-- Create a Branch [Yes]
-- Retrieve a Branch by parameters [Yes]
-- Create a Driver [Yes]
-- Retrieve a Driver by parameters [Yes]
-- Assign a Car to a Driver (i.e. the car is being rented out) [Yes]
-- Assign a Car to a Branch (i.e. the car has been returned) [Yes]
-- Fork this repository and submit your code with commits. [Yes]
+- Create a Car
+- Update a Car information
+- Retrieve a Car by parameters
+- Create a Branch
+- Retrieve a Branch by parameters
+- Create a Driver
+- Retrieve a Driver by parameters
+- Assign a Car to a Driver (i.e. the car is being rented out)
+- Assign a Car to a Branch (i.e. the car has been returned)
+- Fork this repository and submit your code with commits.
 
 This is the information we store about each car:
-- Make (e.g. Tesla) [Yes]
-- Model (e.g. Model 3) [Yes]
-- Year (e.g. 2019) [Yes]
-- Currently_With (options: \[Garage\], \[Driver\]) [Yes]
+- Make (e.g. Tesla)
+- Model (e.g. Model 3)
+- Year (e.g. 2019)
+- Currently_With (options: \[Garage\], \[Driver\])
 
 This is the information we store about each Branch:
-- City (e.g. London) [Yes]
-- Postcode (e.g. W6 9EA) [Yes]
+- City (e.g. London)
+- Postcode (e.g. W6 9EA)
 
 This is the information we store about each Driver:
-- Name (e.g. Kevin Hart) [Yes]
-- Date of Birth (e.g. 02/12/1990) [Yes]
+- Name (e.g. Kevin Hart)
+- Date of Birth (e.g. 02/12/1990)
 
 Before you get started, make sure to read through all the levels below.
 
@@ -281,4 +283,4 @@ Choose one of the following routes for your journey.
 *"All is fair in love and bonus rounds"*
 
 **TASKS**
-+ Surprise us! Add a feature that you think would work well here; for instance, advanced search, integration with other API, a "Favorite" functionality
++ Surprise us! Add a feature that you think would work well here; for instance, advanced search, integration with other API, a "Favourite" functionality
