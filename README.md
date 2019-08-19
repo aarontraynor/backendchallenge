@@ -46,6 +46,9 @@ The project is now running locally on your machine. You can access the browsable
 ## 3rd Party Integrations
 
 UK Postcode Validation: https://postcodes.io/
+- Available under the MIT Licence
+- Requests for information using postcodes within Great Britain may be used under the OS OpenData licence
+- Requests for information using postcodes in Northern Ireland requires a licence from NI Land & Property Services if used commercially
 
 How to use the API
 ==================
