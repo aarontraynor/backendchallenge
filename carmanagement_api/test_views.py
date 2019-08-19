@@ -4,7 +4,7 @@ from django.test import Client
 from rest_framework import status
 
 from carmanagement_api.models import Branch, Driver, Car, BranchInventory, DriverInventory
-from datetime import date
+from datetime import date, datetime
 
 import requests
 
@@ -68,14 +68,16 @@ class CarViewSetTestCase(TestCase):
             "year_of_manufacture": 1990
         })
 
-        self.assertEqual(response.json()), {
+        self.assertEqual(response.json(), {
             "id": Car.objects.get(make="Reliant").id,
             "make": "Reliant",
             "model": "Robin Mk2",
-            "year_of_manufacture": 1990
-        }
+            "year_of_manufacture": 1990,
+            "currently_with_id": None,
+            "currently_with_type": None
+        })
 
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_adding_car_with_invalid_year(self):
         c = Client()
@@ -96,7 +98,7 @@ class CarViewSetTestCase(TestCase):
     def test_retrieving_specific_car(self):
         car = Car.objects.get(make="Ford")
         c = Client()
-        response = c.get("/api/cars/1")
+        response = c.get("/api/cars/1/")
 
         self.assertEqual(response.json(), {
             "id": 1,
@@ -151,6 +153,57 @@ class BranchViewSetTestCase(TestCase):
             ]
         })
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieving_specific_branch(self):
+        c = Client()
+        response = c.get("/api/branches/1/")
+
+        self.assertEqual(response.json(), {
+            "id": 1,
+            "city": Branch.objects.get(id=1).city,
+            "postcode": Branch.objects.get(id=1).postcode,
+            "capacity": Branch.objects.get(id=1).capacity
+        })
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_creating_branch_with_invalid_postcode(self):
+        c = Client()
+        response = c.post("/api/branches/", {
+            "city": "London",
+            "postcode": "ABC123"
+        })
+
+        self.assertEqual(response.json(), {
+            "postcode": "An invalid postcode was given."
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_creating_branch_with_too_short_postcode(self):
+        c = Client()
+        response = c.post("/api/branches/", {
+            "city": "London",
+            "postcode": "WC2B"
+        })
+
+        self.assertEqual(response.json(), {
+            "postcode": "An invalid postcode was given."
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_creating_branch_with_too_long_postcode(self):
+        c = Client()
+        response = c.post("/api/branches", {
+            "city": "London",
+            "postcode": "AA00 00AA"
+        })
+
+        self.assertEqual(response.json(), {
+            "postcode": ["Ensure this field has no more than 8 characters."]
+        })
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
 
 
 class DriverViewSetTestCase(TestCase):
@@ -232,6 +285,8 @@ class BranchInventoryViewSetTestCase(TestCase):
             }
         ])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    #def test_adding_car_to_full_branch(self):
 
 
 class DriverInventoryViewSetTestCase(TestCase):
