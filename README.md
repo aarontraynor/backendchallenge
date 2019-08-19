@@ -2,7 +2,7 @@ Accessing the API
 ====================
 
 The API can be accessed in 1 of 2 ways:
-1. By using the hosted version of the application at http://ottocar.aarontraynor.uk:8080/api
+1. By using the hosted version of the application at http://ottocar.aarontraynor.uk:8080/api/
 2. By setting up and hosting your own version of the application locally using the guide below
 
 Setup instructions
@@ -60,7 +60,7 @@ UK Postcode Validation: https://postcodes.io/
 How to use the API
 ==================
 
-The browsable API at http://localhost:8000/api or http://ottocar.aarontraynor.uk:8080/api provides an easy way to navigate the system and try out the available features. If you are using a browser and wish to receive the raw JSON response from the server, append `?format=json` (or `&format=json` if your request already contains a search parameter) to your API request.
+The browsable API at http://localhost:8000/api/ or http://ottocar.aarontraynor.uk:8080/api/ provides an easy way to navigate the system and try out the available features. If you are using a browser and wish to receive the raw JSON response from the server, append `?format=json` (or `&format=json` if your request already contains a search parameter) to your API request.
 
 ## Cars
 
@@ -82,13 +82,13 @@ A car has the following JSON format:
 
 **GET** Requests
 - List all cars: `GET /api/cars/`
-- Retrieve a specific car: `GET /api/cars/<id>`
+- Retrieve a specific car: `GET /api/cars/<id>/`
 - Search cars: `GET /api/cars/?search=<search_string>`
 
 **POST/PUT/PATCH** Requests
 - Add a new car: `POST /api/cars/`
-- Update a car's information: `PUT /api/cars/<id>`
-- Update some attributes of a car: `PATCH /api/cars/<id>`
+- Update a car's information: `PUT /api/cars/<id>/`
+- Update some attributes of a car: `PATCH /api/cars/<id>/`
 
 ## Branches
 
@@ -107,12 +107,12 @@ A branch has the following JSON format:
 
 **GET** Requests
 - List all branches: `GET /api/branches/`
-- Retrieve a specific branch: `GET /api/branches/<id>`
+- Retrieve a specific branch: `GET /api/branches/<id>/`
 - Search branches: `GET /api/branches/?search=<search_string>`
 
 **POST/PUT/PATCH** Requests
 - Add a new branch: `POST /api/branches/`
-- Update a branch's information: `PUT /api/branches/<id>`
+- Update a branch's information: `PUT /api/branches/<id>/`
 - Update some attributes of a branch: `PATCH /api/branches/<id>`
 
 ## Drivers
@@ -133,12 +133,12 @@ A driver has the following JSON format:
 
 **GET** Requests
 - List all drivers: `GET /api/drivers/`
-- Retrieve a specific driver: `GET /api/drivers/<id>`
+- Retrieve a specific driver: `GET /api/drivers/<id>/`
 - Search branches: `GET /api/branches/?search=<search_string>`
 
 **POST/PUT/PATCH** Requests
 - Add a new driver: `POST /api/drivers/`
-- Update a driver's information: `PUT /api/drivers/<id>`
+- Update a driver's information: `PUT /api/drivers/<id>/`
 - Update some attributes of a driver: `PATCH /api/drivers/<id>`
 
 ## Car Rental
@@ -160,7 +160,7 @@ A car rental has the following JSON format:
 
 **GET** Requests
 - List all car rentals: `GET /api/rent-car/`
-- Retrieve a specific car rental: `GET /api/rent-car/<id>`
+- Retrieve a specific car rental: `GET /api/rent-car/<id>/`
 
 **POST/PUT/PATCH** Requests
 - Add a new rental: `POST /api/rent-car/`
@@ -183,7 +183,7 @@ A vehicle in a branch's inventory has the following JSON format:
 
 **GET** Requests
 - List all cars at branches: `GET /api/return-car/`
-- Retrieve a specific car/branch association: `GET /api/return-car/<id>`
+- Retrieve a specific car/branch association: `GET /api/return-car/<id>/`
 
 **POST/PUT/PATCH** Requests
 - Return a car to a branch: `POST /api/return-car/`
