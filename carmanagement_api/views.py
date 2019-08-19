@@ -97,24 +97,20 @@ class BranchViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             city = serializer.validated_data['city']
             postcode = serializer.validated_data['postcode']
-            capacity = serializer.validated_data['capacity']
             response_json = requests.get(f'https://api.postcodes.io/postcodes/{postcode}/validate').json()
 
-            if capacity > 0:
-                if response_json['status'] == 200:
-                    if response_json['result'] == True:
-                        branch = models.Branch.objects.create(
-                            city = city,
-                            postcode = postcode
-                        )
+            if response_json['status'] == 200:
+                if response_json['result'] == True:
+                    branch = models.Branch.objects.create(
+                        city = city,
+                        postcode = postcode
+                    )
 
-                        return Response({'message': f'A branch in {branch} was created successfully.'})
-                    else:
-                        return Response({'postcode': 'An invalid postcode was given.'}, status.HTTP_400_BAD_REQUEST)
+                    return Response({'message': f'A branch in {branch} was created successfully.'})
                 else:
-                    return Response({'postcode': 'There was an error validating your postcode. Please try again later.'}, status.HTTP_400_BAD_REQUEST)
+                    return Response({'postcode': 'An invalid postcode was given.'}, status.HTTP_400_BAD_REQUEST)
             else:
-                return Response({'capacity': 'A branch must have a capacity of at least 1.'}, status.HTTP_400_BAD_REQUEST)
+                return Response({'postcode': 'There was an error validating your postcode. Please try again later.'}, status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 

@@ -193,7 +193,7 @@ class BranchViewSetTestCase(TestCase):
 
     def test_creating_branch_with_too_long_postcode(self):
         c = Client()
-        response = c.post("/api/branches", {
+        response = c.post("/api/branches/", {
             "city": "London",
             "postcode": "AA00 00AA"
         })
@@ -203,7 +203,6 @@ class BranchViewSetTestCase(TestCase):
         })
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
 
 
 class DriverViewSetTestCase(TestCase):
@@ -252,6 +251,41 @@ class DriverViewSetTestCase(TestCase):
         })
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_adding_new_driver(self):
+        c = Client()
+        response = c.post("/api/drivers/", {
+            "first_name": "John",
+            "middle_names": "Thomas",
+            "last_name": "Doe",
+            "date_of_birth": "1990-01-01"
+        })
+
+        self.assertEqual(response.json(), {
+            "id": Driver.objects.get(first_name="John").id,
+            "first_name": "John",
+            "middle_names": "Thomas",
+            "last_name": "Doe",
+            "date_of_birth": "1990-01-01"
+        })
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_adding_new_driver_with_no_middle_name(self):
+        c = Client()
+        response = c.post("/api/drivers/", {
+            "first_name": "Michael",
+            "last_name": "Jones",
+            "date_of_birth": "1990-01-01"
+        })
+
+        self.assertEqual(response.json(), {
+            "id": Driver.objects.get(first_name="Michael").id,
+            "first_name": "Michael",
+            "middle_names": None,
+            "last_name": "Jones",
+            "date_of_birth": "1990-01-01"
+        })
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 class BranchInventoryViewSetTestCase(TestCase):
     """Tests for the BranchInventory (returning a car) ViewSet"""
     def setUp(self):
@@ -286,7 +320,35 @@ class BranchInventoryViewSetTestCase(TestCase):
         ])
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    #def test_adding_car_to_full_branch(self):
+    def test_adding_car_to_branch(self):
+        car = Car.objects.create(make="LEVC", model="TX", year_of_manufacture=2018)
+        branch = Branch.objects.get(postcode="WC2B 6ST")
+
+        c = Client()
+        response = c.post("/api/return-car/", {
+            "car": car.id,
+            "branch": branch.id
+        })
+
+        self.assertEqual(response.json(), {
+            "message": f"Car {car.__str__()} has been returned to {branch.__str__()}"
+        })
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_adding_car_to_full_branch(self):
+        car = Car.objects.create(make="Toyota", model="Prius", year_of_manufacture=2014)
+        branch = Branch.objects.get(postcode="DA16 3RR")
+
+        c = Client()
+        response = c.post("/api/return-car/", {
+            "car": car.id,
+            "branch": branch.id
+        })
+
+        self.assertEqual(response.json(), {
+            "error": f"The branch {branch.__str__()} is currently at full capacity."
+        })
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 class DriverInventoryViewSetTestCase(TestCase):
