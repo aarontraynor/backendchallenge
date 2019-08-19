@@ -97,14 +97,27 @@ class BranchViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             city = serializer.validated_data['city']
             postcode = serializer.validated_data['postcode']
+            capacity = None
             response_json = requests.get(f'https://api.postcodes.io/postcodes/{postcode}/validate').json()
+
+            try:
+                capacity = serializer.validated_data['capacity']
+            except:
+                capacity = -1
 
             if response_json['status'] == 200:
                 if response_json['result'] == True:
-                    branch = models.Branch.objects.create(
-                        city = city,
-                        postcode = postcode
-                    )
+                    if capacity == -1:
+                        branch = models.Branch.objects.create(
+                            city = city,
+                            postcode = postcode
+                        )
+                    else:
+                        branch = models.Branch.objects.create(
+                            city = city,
+                            postcode = postcode,
+                            capacity = capacity
+                        )
 
                     return Response({'message': f'A branch in {branch} was created successfully.'})
                 else:
