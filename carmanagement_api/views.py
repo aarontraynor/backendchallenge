@@ -155,7 +155,7 @@ class BranchInventoryViewSet(viewsets.ModelViewSet):
                     car.save()
 
                     # Return a message to confirm that the association has been successfully added
-                    return Response({'message': f'Car {car} has been returned to {branch}'})
+                    return Response({'message': f'Car {car} has been returned to {branch}'}, status.HTTP_201_CREATED)
                 else:
                     return Response({'error': f'The branch {branch} is currently at full capacity.'}, status.HTTP_400_BAD_REQUEST)
             else:
@@ -198,7 +198,7 @@ class DriverInventoryViewSet(viewsets.ModelViewSet):
                 car.save()
 
                 # Return a message to confirm that the association has been successfully added
-                return Response({'message': f'Car {car} has been assigned to Driver {driver}'})
+                return Response({'message': f'Car {car} has been assigned to Driver {driver}'}, status.HTTP_201_CREATED)
             else:
                 # Inform the user that the car is already assigned to a driver
                 current_driver = models.DriverInventory.objects.get(car=car).driver
