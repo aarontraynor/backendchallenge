@@ -1,3 +1,10 @@
+Accessing the API
+====================
+
+The API can be accessed in 1 of 2 ways:
+1. By using the hosted version of the application at http://ottocar.aarontraynor.uk:8080/api
+2. By setting up and hosting your own version of the application locally using the guide below
+
 Setup instructions
 ====================
 
